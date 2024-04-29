@@ -1,0 +1,20 @@
+[
+  {
+    "id": "FL100",
+    "airline": "Indigo",
+    "origin": "Delhi",
+    "destination": "Mumbai",
+    "departureTime": "2024-08-15T09:00:00Z",
+    "arrivalTime": "2024-08-15T11:15:00Z",
+    "price": 4500
+  },
+  {
+    "id": "FL101",
+    "airline": "Indigo",
+    "origin": "Delhi",
+    "destination": "Surat",
+    "departureTime": "2024-08-15T10:00:00Z",
+    "arrivalTime": "2024-08-15T12:15:00Z",
+    "price": 6500
+  }
+]

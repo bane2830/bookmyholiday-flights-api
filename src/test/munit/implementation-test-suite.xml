@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="implementation-test-suite.xml" />
+	<munit:test name="implementation-PNRcheck-suite-PostBookFlightTest" doc:id="80e6bca7-5fe3-4d9b-8cfb-a5554a0d11d4" description="Test">
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to PostBookFlight" doc:id="83232f0e-be05-455f-9833-6e183b808ba9" name="PostBookFlight"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="f752979e-dff4-4d40-a3a6-945ea916c3da" expression="#[payload.pnrNumber]" is='#[MunitTools::equalTo("PNR123")]'/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="implementation-test-suite-PostBookFlightTest" doc:id="111afe89-9416-411d-9037-fea8e517c160" description="Test">
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to PostBookFlight" doc:id="bea2c5db-c22e-42a7-b0a6-8bcf0824b846" name="PostBookFlight"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="e5ee75d3-90b4-4d6d-85c7-e1461d350480" message="Mediatype mismatch. Json Expected" expression="#[payload]" is='#[MunitTools::withMediaType("application/json")]'/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

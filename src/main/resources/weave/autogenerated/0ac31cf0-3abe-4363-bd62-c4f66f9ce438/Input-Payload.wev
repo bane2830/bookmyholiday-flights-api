@@ -1,0 +1,8 @@
+%dw 2.0
+
+type auto_0ac31cf0_3abe_4363_bd62_c4f66f9ce438_Input_Payload = {
+  passengerDetails: Array<{    passportNumber: String,     firstName: String,     lastName: String,     age: Number,     _?: Any  }>, 
+  flightId: String, 
+  _?: Any
+}
+
