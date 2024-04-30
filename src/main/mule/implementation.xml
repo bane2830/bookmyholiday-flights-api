@@ -44,14 +44,25 @@ payload map ( payload01 , indexOfPayload01 ) -> {
 		<set-payload value='#[output application/json&#10;---&#10;{&#10;  "message": "Booking cancelled successfully"&#10;}]' doc:name="Set Payload" doc:id="70bfe8af-6d85-4122-861d-2a4b77efd95b" />
 	</flow>
 	<flow name="getFlights" doc:id="b2a6afba-6e43-4909-a918-9c40a809f0d5" >
-		<http:request method="GET" doc:name="Request" doc:id="aa918598-92bb-4c62-a5c1-a59425975357" config-ref="HTTP_Request_configuration" path="/indigoflights" outputMimeType="application/json">
-			<http:query-params ><![CDATA[#[output application/java
+		<db:select doc:name="Select" doc:id="c00dedaf-f65f-4bfc-a2ee-2950a89fcb37" config-ref="Database_Config" >
+			<db:sql ><![CDATA[select * from flightdb.flights where origin=:origin]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{'origin': attributes.queryParams.origin}]]]></db:input-parameters>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="d4ce0697-2ece-4c9c-9ebb-57ccf3e29bd6" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
 ---
-{
-	"origin" : message.attributes.queryParams.origin,
-	"departureDate" : message.attributes.queryParams.departureTime,
-	"destination" : message.attributes.queryParams.destination
-}]]]></http:query-params>
-		</http:request>
+payload map ( payload01 , indexOfPayload01 ) -> {
+	id: payload01.FLIGHTID default "",
+	airline: payload01.AIRLINE default "",
+	origin: payload01.ORIGIN default "",
+	destination: payload01.DESTINATION default "",
+	departureTime: payload01.DEPARTURETIME default "",
+	arrivalTime: payload01.ARRIVALTIME default "",
+	price: payload01.PRICE default 0
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
 	</flow>
 </mule>
