@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd ">
     <http:listener-config name="BookMyHolidayFlightsApi-httpListenerConfig">
-        <http:listener-connection host="0.0.0.0" port="8081" />
+        <http:listener-connection host="0.0.0.0" port="${listener.port}" />
     </http:listener-config>
-    <apikit:config name="BookMyHolidayFlightsApi-config" api="resource::a3ae22b0-b081-4261-9409-855b81bbc4ad:bookmyholidayflightsapi:1.0.2:raml:zip:BookMyHolidayFlightsApi.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+    <apikit:config name="BookMyHolidayFlightsApi-config" api="resource::a3ae22b0-b081-4261-9409-855b81bbc4ad:bookmyholidayflightsapi:1.0.5:raml:zip:BookMyHolidayFlightsApi.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
     <http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="b29ea81f-0bfd-4df9-97eb-46b12aa41c90">
         <http:listener-connection host="0.0.0.0" port="8082" />
     </http:listener-config>
-    <flow name="BookMyHolidayFlightsApi-main">
+    <configuration-properties doc:name="Configuration properties" doc:id="85596210-f61a-44b2-ad34-4ea15edaa8cb" file="config.yaml" />
+	<flow name="BookMyHolidayFlightsApi-main">
         <http:listener config-ref="BookMyHolidayFlightsApi-httpListenerConfig" path="/api/*">
             <http:response statusCode="#[vars.httpStatus default 200]">
                 <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
@@ -20,7 +21,7 @@
         <apikit:router config-ref="BookMyHolidayFlightsApi-config" />
         <error-handler>
             <on-error-propagate type="APIKIT:BAD_REQUEST">
-                <ee:transform doc:name="Transform Message">
+				<ee:transform doc:name="Transform Message">
                     <ee:message>
                         <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -33,7 +34,7 @@ output application/json
                 </ee:transform>
             </on-error-propagate>
             <on-error-propagate type="APIKIT:NOT_FOUND">
-                <ee:transform doc:name="Transform Message">
+				<ee:transform doc:name="Transform Message">
                     <ee:message>
                         <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -46,7 +47,7 @@ output application/json
                 </ee:transform>
             </on-error-propagate>
             <on-error-propagate type="APIKIT:METHOD_NOT_ALLOWED">
-                <ee:transform doc:name="Transform Message">
+				<ee:transform doc:name="Transform Message">
                     <ee:message>
                         <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -59,7 +60,7 @@ output application/json
                 </ee:transform>
             </on-error-propagate>
             <on-error-propagate type="APIKIT:NOT_ACCEPTABLE">
-                <ee:transform doc:name="Transform Message">
+				<ee:transform doc:name="Transform Message">
                     <ee:message>
                         <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -135,5 +136,8 @@ output application/json
     </flow>
     <flow name="post:\flights:application\json:BookMyHolidayFlightsApi-config">
         <flow-ref doc:name="BookFlightFlowReference" doc:id="2cffe514-c168-41fe-96df-981b119b1f72" name="PostBookFlight" />
+    </flow>
+    <flow name="get:\bookings:BookMyHolidayFlightsApi-config">
+		<flow-ref doc:name="Flow Reference" doc:id="397fab91-431e-458c-bb09-a94b32365922" name="GetBookingImplementation"/>
     </flow>
 </mule>

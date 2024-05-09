@@ -1,0 +1,12 @@
+{
+  "flightId": "FL101",
+  "Status" : "Active",
+  "passengerDetails": [
+    {
+      "firstName": "Anand",
+      "lastName": "Bane",
+      "age": 32,
+      "passportNumber": "N1234567"
+    }
+  ]
+}

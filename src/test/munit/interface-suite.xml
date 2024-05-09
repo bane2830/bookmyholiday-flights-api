@@ -8,42 +8,146 @@
 		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
 		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
 	<munit:config name="interface-suite.xml" />
-	<munit:test name="BookMyHolidayFlightsApi-main-test" doc:id="25a103fd-6773-424b-8220-46f54e262f5f" >
+	<munit:test name="get:\flights:BookMyHolidayFlightsApi-config-test" doc:id="e363aa20-ce33-4b89-ae13-e7b7b361b9e9" >
 		<munit:behavior >
-			<munit:set-event doc:name="Set Input" doc:id="e38c7193-7c64-4626-9724-1f666470c61b" >
-				<munit:payload value="#[readUrl('classpath://BookMyHolidayFlightsApimaintest\set-event_payload.dwl')]" encoding="UTF-8" />
-				<munit:attributes value="#[readUrl('classpath://BookMyHolidayFlightsApimaintest\set-event_attributes.dwl')]" />
+			<munit:set-event doc:name="Set Input" doc:id="68c450b8-3f93-4916-a091-b706cca72279" >
+				<munit:payload value="#[readUrl('classpath://getflightsBookMyHolidayFlightsApiconfigtest\set-event_payload1.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://getflightsBookMyHolidayFlightsApiconfigtest\set-event_attributes1.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://getflightsBookMyHolidayFlightsApiconfigtest\set-event_variable_1.dwl')]" />
+				</munit:variables>
 			</munit:set-event>
 		</munit:behavior>
 		<munit:execution >
-			<flow-ref doc:name="Flow-ref to BookMyHolidayFlightsApi-main" doc:id="14ea417c-adbf-40a9-87ba-0538de7e4098" name="BookMyHolidayFlightsApi-main"/>
+			<flow-ref doc:name="Flow-ref to get:\flights:BookMyHolidayFlightsApi-config" doc:id="afb873be-09a4-412e-a723-fe2d2c855441" name="get:\flights:BookMyHolidayFlightsApi-config"/>
 		</munit:execution>
 		<munit:validation >
-			<munit-tools:assert doc:name="Assert payload" doc:id="1d8fd659-5ff5-4e6e-852f-ad143ef11a9f" message="The payload does not match">
+			<munit-tools:assert doc:name="Assert payload" doc:id="2440d5b8-b808-4241-af94-b6bc60a2190a" message="The payload does not match">
 				<munit-tools:that ><![CDATA[#[%dw 2.0
-import BookMyHolidayFlightsApimaintest::assert_expression_payload
+import getflightsBookMyHolidayFlightsApiconfigtest::assert_expression_payload1
+---
+assert_expression_payload1::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="post:\flights:application\json:BookMyHolidayFlightsApi-config-test" doc:id="cd63333a-29c8-40b2-a203-b8c42f9576ab" >
+		<munit:behavior >
+			<munit:set-event doc:name="Set Input" doc:id="7d429532-99d3-42f0-a6e1-c26573d32e54" >
+				<munit:payload value="#[output application/json  --- readUrl('classpath://postflightsapplicationjsonBookMyHolidayFlightsApiconfigtest\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json " />
+				<munit:attributes value="#[readUrl('classpath://postflightsapplicationjsonBookMyHolidayFlightsApiconfigtest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://postflightsapplicationjsonBookMyHolidayFlightsApiconfigtest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to post:\flights:application\json:BookMyHolidayFlightsApi-config" doc:id="42667fd6-2685-41c4-a3f0-2ce488c3407b" name="post:\flights:application\json:BookMyHolidayFlightsApi-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="2151ceee-8846-4dae-bf7a-676c1969535d" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import postflightsapplicationjsonBookMyHolidayFlightsApiconfigtest::assert_expression_payload
 ---
 assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
 			</munit-tools:assert>
 		</munit:validation>
 	</munit:test>
-	<munit:test name="get:\flights:BookMyHolidayFlightsApi-config-test" doc:id="17b9c9c8-e8bf-4aa7-b2f3-1f807969bdc8" >
+	<munit:test name="delete:\flights\(pnrNumber):BookMyHolidayFlightsApi-config-test" doc:id="4e0ef7d5-d697-4168-90dc-8c12e7a8a2fa" >
 		<munit:behavior >
-			<munit:set-event doc:name="Set Input" doc:id="5e8a72eb-7c57-45ea-b584-e306225f619c" >
-				<munit:payload value="#[readUrl('classpath://getflightsBookMyHolidayFlightsApiconfigtest\set-event_payload.dwl')]" encoding="UTF-8" />
-				<munit:attributes value="#[readUrl('classpath://getflightsBookMyHolidayFlightsApiconfigtest\set-event_attributes.dwl')]" />
+			<munit:set-event doc:name="Set Input" doc:id="773dc73a-a202-4583-9850-e147b16c2ed6" >
+				<munit:payload value="#[output application/json  --- readUrl('classpath://deleteflightspnrNumberBookMyHolidayFlightsApiconfigtest\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json " />
+				<munit:attributes value="#[readUrl('classpath://deleteflightspnrNumberBookMyHolidayFlightsApiconfigtest\set-event_attributes.dwl')]" />
 				<munit:variables >
-					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://getflightsBookMyHolidayFlightsApiconfigtest\set-event_variable_.dwl')]" />
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://deleteflightspnrNumberBookMyHolidayFlightsApiconfigtest\set-event_variable_.dwl')]" />
 				</munit:variables>
 			</munit:set-event>
 		</munit:behavior>
 		<munit:execution >
-			<flow-ref doc:name="Flow-ref to get:\flights:BookMyHolidayFlightsApi-config" doc:id="2addd85b-d271-4f46-9afd-b9eb41d22e4a" name="get:\flights:BookMyHolidayFlightsApi-config"/>
+			<flow-ref doc:name="Flow-ref to delete:\flights\(pnrNumber):BookMyHolidayFlightsApi-config" doc:id="edbca1ad-a1b0-49aa-96a2-43cc45331da1" name="delete:\flights\(pnrNumber):BookMyHolidayFlightsApi-config"/>
 		</munit:execution>
 		<munit:validation >
-			<munit-tools:assert doc:name="Assert payload" doc:id="a879543c-bf74-42d5-a7ff-764a0b4e76e6" message="The payload does not match">
+			<munit-tools:assert doc:name="Assert payload" doc:id="9012d106-b5a5-4d09-a645-8b2274e0c044" message="The payload does not match">
 				<munit-tools:that ><![CDATA[#[%dw 2.0
-import getflightsBookMyHolidayFlightsApiconfigtest::assert_expression_payload
+import deleteflightspnrNumberBookMyHolidayFlightsApiconfigtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="get:\bookings:BookMyHolidayFlightsApi-config-test" doc:id="5edc02c2-b16a-4773-b42f-dcee5f523f21" >
+		<munit:behavior >
+			<munit:set-event doc:name="Set Input" doc:id="d28d299b-881d-42fe-be80-44cc0b066c10" >
+				<munit:payload value="#[readUrl('classpath://getbookingsBookMyHolidayFlightsApiconfigtest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://getbookingsBookMyHolidayFlightsApiconfigtest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://getbookingsBookMyHolidayFlightsApiconfigtest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to get:\bookings:BookMyHolidayFlightsApi-config" doc:id="86995edd-ac5c-4369-986f-9b1dfbe2d852" name="get:\bookings:BookMyHolidayFlightsApi-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="525c4f78-97e7-4283-aee1-f6eb1ea15fcc" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import getbookingsBookMyHolidayFlightsApiconfigtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="BookMyHolidayFlightsApi-main-test" doc:id="64acb1b4-ef8c-4656-b07f-634f4c1b5f2c" >
+		<munit:behavior >
+			<munit:set-event doc:name="Set Input" doc:id="60b85c9c-f0d4-4ad0-b4b4-98f2f9b38cb4" >
+				<munit:payload value="#[readUrl('classpath://BookMyHolidayFlightsApimaintest\set-event_payload1.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://BookMyHolidayFlightsApimaintest\set-event_attributes1.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to BookMyHolidayFlightsApi-main" doc:id="0311569d-f3bc-4c6b-bed6-b20d3ad64f4b" name="BookMyHolidayFlightsApi-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="17408780-e7d8-42f8-b8d5-880e0efda9ef" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import BookMyHolidayFlightsApimaintest::assert_expression_payload1
+---
+assert_expression_payload1::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="BookMyHolidayFlightsApi-main-test1" doc:id="f62b0ba1-c3eb-4233-a26f-a3279b353f61" >
+		<munit:behavior >
+			<munit:set-event doc:name="Set Input" doc:id="a4a32a7d-12b4-450e-821a-701e00360753" >
+				<munit:payload value="#[readUrl('classpath://BookMyHolidayFlightsApimaintest1\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://BookMyHolidayFlightsApimaintest1\set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to BookMyHolidayFlightsApi-main" doc:id="b2702eb9-e7d3-4d4e-b929-be9d168e53ec" name="BookMyHolidayFlightsApi-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="f44f954e-fcf6-427b-bf5b-0c3488ad2bcc" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import BookMyHolidayFlightsApimaintest1::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="BookMyHolidayFlightsApi-main-test2" doc:id="ab50d025-2833-4ca6-bc28-70e23b81f9b7" >
+		<munit:behavior >
+			<munit:set-event doc:name="Set Input" doc:id="663119c5-14ae-4f6e-a1b4-cd517fddbfe8" >
+				<munit:payload value="#[readUrl('classpath://BookMyHolidayFlightsApimaintest2\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://BookMyHolidayFlightsApimaintest2\set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to BookMyHolidayFlightsApi-main" doc:id="f95a5876-326b-4606-a31a-4d95f0441157" name="BookMyHolidayFlightsApi-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="917b8712-8e78-417f-a5b5-4a35bd7106de" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import BookMyHolidayFlightsApimaintest2::assert_expression_payload
 ---
 assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
 			</munit-tools:assert>

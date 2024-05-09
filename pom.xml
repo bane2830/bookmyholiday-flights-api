@@ -2,13 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.mycompany</groupId>
+	<groupId>a3ae22b0-b081-4261-9409-855b81bbc4ad</groupId>
 	<artifactId>bookmyholiday-flights-api</artifactId>
 	<version>1.0.0</version>
 	<packaging>mule-application</packaging>
 
 	<name>bookmyholiday-flights-api</name>
 
+	<description/>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -16,6 +17,9 @@
 		<app.runtime>4.5.1</app.runtime>
 		<mule.maven.plugin.version>4.0.0</mule.maven.plugin.version>
 		<munit.version>3.0.0</munit.version>
+		<tags/>
+		<categories>[]</categories>
+		<fields>[]</fields>
 	</properties>
 
 	<build>
@@ -31,20 +35,19 @@
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
 				<configuration>
-					<classifier>---- select project type ----</classifier>
 					<sharedLibraries>
-					<sharedLibrary>
-				    <groupId>org.apache.derby</groupId>
-				    <artifactId>derby</artifactId>
-				</sharedLibrary>
-				<sharedLibrary>
-				    <groupId>org.apache.commons</groupId>
-				    <artifactId>commons-dbcp2</artifactId>
-				</sharedLibrary>
-				<sharedLibrary>
-				    <groupId>org.springframework</groupId>
-				    <artifactId>spring-jdbc</artifactId>
-				</sharedLibrary>
+						<sharedLibrary>
+							<groupId>org.apache.derby</groupId>
+							<artifactId>derby</artifactId>
+						</sharedLibrary>
+						<sharedLibrary>
+							<groupId>org.apache.commons</groupId>
+							<artifactId>commons-dbcp2</artifactId>
+						</sharedLibrary>
+						<sharedLibrary>
+							<groupId>org.springframework</groupId>
+							<artifactId>spring-jdbc</artifactId>
+						</sharedLibrary>
 						<sharedLibrary>
 							<groupId>org.springframework</groupId>
 							<artifactId>spring-beans</artifactId>
@@ -70,6 +73,7 @@
 							<artifactId>spring-core</artifactId>
 						</sharedLibrary>
 					</sharedLibraries>
+					<classifier>---- select project type ----</classifier>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -100,20 +104,20 @@
 
 	<dependencies>
 		<dependency>
-	    <groupId>org.apache.derby</groupId>
-	    <artifactId>derby</artifactId>
-	    <version>10.14.2.0</version>
-	</dependency>
-	<dependency>
-	    <groupId>org.apache.commons</groupId>
-	    <artifactId>commons-dbcp2</artifactId>
-	    <version>2.5.0</version>
-	</dependency>
-	<dependency>
-	    <groupId>org.springframework</groupId>
-	    <artifactId>spring-jdbc</artifactId>
-	    <version>5.1.0.RELEASE</version>
-	</dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>10.14.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
+			<version>2.5.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>5.1.0.RELEASE</version>
+		</dependency>
 		<dependency>
 			<groupId>org.mule.connectors</groupId>
 			<artifactId>mule-http-connector</artifactId>
@@ -151,13 +155,6 @@
 			<artifactId>assertions</artifactId>
 			<version>1.2.1</version>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>a3ae22b0-b081-4261-9409-855b81bbc4ad</groupId>
-			<artifactId>bookmyholidayflightsapi</artifactId>
-			<version>1.0.2</version>
-			<classifier>raml</classifier>
-			<type>zip</type>
 		</dependency>
 		<dependency>
 			<groupId>org.mule.modules</groupId>
@@ -200,6 +197,13 @@
 			<artifactId>mule-db-connector</artifactId>
 			<version>1.14.6</version>
 			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
+			<groupId>a3ae22b0-b081-4261-9409-855b81bbc4ad</groupId>
+			<artifactId>bookmyholidayflightsapi</artifactId>
+			<version>1.0.5</version>
+			<classifier>raml</classifier>
+			<type>zip</type>
 		</dependency>
 	</dependencies>
 
