@@ -1,0 +1,19 @@
+pipeline {
+    agent any
+    stages {
+        stage ('Building') {
+            steps {
+                bat 'mvn clean install -DskipTests' 
+            }            
+        }
+
+stage ('Deploying') {
+	environment { 
+			ANYPOINT_CREDENTIALS = credentials(' anypointplatformcredentials ')
+			}
+            steps {
+				bat 'mvn clean deploy -DmuleDeploy -Dusername=${ANYPOINT_CREDENTIALS_USR} -Dpassword=${ANYPOINT_CREDENTIALS_PSW} -DskipTests'            
+			}            
+        }
+    }
+}

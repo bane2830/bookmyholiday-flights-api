@@ -37,16 +37,16 @@
 				<configuration>
 				<cloudHubDeployment>
 						<uri>https://anypoint.mulesoft.com</uri>
-						<muleVersion>${mule.version}</muleVersion>
+						<muleVersion>4.4.0</muleVersion>
 						<!-- Deploy User Parameter -->
-						<username>${anypoint.username}</username>
-						<password>${anypoint.password}</password>
+						<username>${username}</username>
+						<password>${password}</password>
  
-						<environment>${env}</environment>
-						<applicationName>${appnbname}</applicationName>
-						<businessGroup>${business}</businessGroup>
-						<workerType>${vCore}</workerType>
-						<workers>${workers}</workers>
+						<environment>Sandbox</environment>
+						<applicationName>bookmyholiday-flights-api</applicationName>
+						<businessGroup>NTT Data</businessGroup>
+						<workerType>MICRO</workerType>
+						<workers>1</workers>
 						<objectStoreV2>true</objectStoreV2>
 					</cloudHubDeployment>
 					<sharedLibraries>
