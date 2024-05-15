@@ -35,20 +35,6 @@
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
 				<configuration>
-				<cloudHubDeployment>
-						<uri>https://anypoint.mulesoft.com</uri>
-						<muleVersion>4.4.0</muleVersion>
-						<!-- Deploy User Parameter -->
-						<username>${username}</username>
-						<password>${password}</password>
- 
-						<environment>Sandbox</environment>
-						<applicationName>bookmyholiday-flights-api</applicationName>
-						<businessGroup>NTT Data</businessGroup>
-						<workerType>MICRO</workerType>
-						<workers>1</workers>
-						<objectStoreV2>true</objectStoreV2>
-					</cloudHubDeployment>
 					<sharedLibraries>
 						<sharedLibrary>
 							<groupId>org.apache.derby</groupId>

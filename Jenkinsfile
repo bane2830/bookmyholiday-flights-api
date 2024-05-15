@@ -19,7 +19,6 @@ environment {
 ANYPOINT_CREDENTIALS = credentials('')
 
 }
-
 steps {
 
 echo 'Deploying mule project due to the latest code commit…'
