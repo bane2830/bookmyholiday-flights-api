@@ -130,14 +130,38 @@ output application/json
     <flow name="delete:\flights\(pnrNumber):BookMyHolidayFlightsApi-config">
         <flow-ref doc:name="Flow Reference" doc:id="eb77ae5b-31df-4880-b49f-19dd8e703bfe" name="cancelBooking" />
         <logger level="INFO" message="delete:\flights\(pnrNumber):BookMyHolidayFlightsApi-config" />
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="965e4d4c-70a0-4145-8ae9-5c9ef1b863da" >
+				<set-payload value="#[message.payload]" doc:name="Set Payload" doc:id="3f41f9a8-c2a9-4e96-9652-9dcf3e0c5bfb" />
+				<logger level="INFO" doc:name="DeleteBookingError" doc:id="00a49f50-ae76-42c3-8b00-547037de5dc5" message="#[payload]"/>
+			</on-error-propagate>
+		</error-handler>
     </flow>
     <flow name="get:\flights:BookMyHolidayFlightsApi-config">
         <flow-ref doc:name="Flow Reference" doc:id="df387302-3223-42c4-8c90-a7c93b6db152" name="getFlights" />
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="15e6cfd3-e9c7-4c95-a57d-01bc22a6042b" >
+				<set-payload value="#[payload]" doc:name="Set Payload" doc:id="2e015ffa-4f2a-4978-8d31-0ba5d423142b" />
+				<logger level="INFO" doc:name="GetFlightsError" doc:id="42a179c6-0399-435f-83d9-8306544cb8e8" message="#[payload]" />
+			</on-error-propagate>
+		</error-handler>
     </flow>
     <flow name="post:\flights:application\json:BookMyHolidayFlightsApi-config">
         <flow-ref doc:name="BookFlightFlowReference" doc:id="2cffe514-c168-41fe-96df-981b119b1f72" name="PostBookFlight" />
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="b16450f2-7de1-40df-b60a-b221b5d8fd98" >
+				<set-payload value="#[payload]" doc:name="Set Payload" doc:id="7f1ed4a2-69a5-4765-9efa-903e1291abaf" />
+				<logger level="INFO" doc:name="FlightBookingError" doc:id="981cddaf-486d-49be-b930-e8a3c22982b1" message="#[payload]" />
+			</on-error-propagate>
+		</error-handler>
     </flow>
     <flow name="get:\bookings:BookMyHolidayFlightsApi-config">
 		<flow-ref doc:name="Flow Reference" doc:id="397fab91-431e-458c-bb09-a94b32365922" name="GetBookingImplementation"/>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="83962487-fcc5-44f2-ac94-bf7abe434f5e" >
+				<set-payload value="#[payload]" doc:name="Set Payload" doc:id="b1888221-5b61-4d59-b8b0-3f48ef54558a" />
+				<logger level="INFO" doc:name="GetBookingsError" doc:id="b5e01f58-910b-4fbc-973a-b4bbba3bddc1" message="#[payload]" />
+			</on-error-propagate>
+		</error-handler>
     </flow>
 </mule>

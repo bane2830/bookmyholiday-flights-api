@@ -16,7 +16,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	</db:config>
 	<flow name="PostBookFlight" doc:id="0ac31cf0-3abe-4363-bd62-c4f66f9ce438" >
 		<set-variable value="#[payload]" doc:name="Set Variable" doc:id="7d63e860-f389-4dc9-9ac9-75a0c47aa412" variableName="bookingdetails"/>
-		<logger level="INFO" doc:name="Logger" doc:id="8effa231-f5f3-4d19-a772-8cfb8d29e04d" />
+		<logger level="INFO" doc:name="Start" doc:id="8effa231-f5f3-4d19-a772-8cfb8d29e04d" message="Book Flight Flow started"/>
 		<db:select doc:name="CheckFlightExists" doc:id="c38e843c-0030-44a2-b771-2cfba8a66a62" config-ref="Database_Config">
 					<db:sql><![CDATA[select * from flightdb.flights
 where flightid = :flightid]]></db:sql>
@@ -46,7 +46,6 @@ and passengerDetails= :passengerDetails
 				<choice doc:name="Choice" doc:id="97355ff6-fe82-4b3d-a43c-407385036bc3">
 			<when expression="#[!isEmpty(payload)]">
 				<set-payload value="Booking Already Exists" doc:name="Set Payload" doc:id="b5111ec1-f8ad-47f0-8a4e-40411eb10417" />
-						<logger level="INFO" doc:name="Logger" doc:id="453b5184-c317-4986-9bb0-198561558120" />
 			</when>
 			<otherwise>
 				<db:insert doc:name="InsertBooking" doc:id="33c28d7e-b6e8-4f99-8ad6-e3a186855965" config-ref="Database_Config">
@@ -92,8 +91,8 @@ output application/json
 							</ee:message>
 						</ee:transform>
 						<set-payload value='#[payload]' doc:name="Set Payload" doc:id="6056c9d1-3316-4974-ba3b-cd8a6bc06c47" />
-						<logger level="INFO" doc:name="Logger" doc:id="4628d4eb-7678-4079-ae0f-04551ae9e25d" />
-						<logger level="INFO" doc:name="Logger" doc:id="641a1a97-1a19-45b2-afa2-e5672a49e9e0" />
+						<logger level="INFO" doc:name="Payload Log" doc:id="4628d4eb-7678-4079-ae0f-04551ae9e25d" message="#[payload]"/>
+						<logger level="INFO" doc:name="END" doc:id="641a1a97-1a19-45b2-afa2-e5672a49e9e0" message="Book FLights Flow completed"/>
 			</otherwise>
 		</choice>
 			</when>
@@ -101,10 +100,23 @@ output application/json
 				<set-payload value="Flight ID does not exist" doc:name="Set Payload" doc:id="1b1b788a-5379-4233-9947-c10374509ead" />
 			</otherwise>
 		</choice>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="3871be19-6b97-4367-a462-41d52bc92255" type="ANY">
+				<logger level="ERROR" doc:name="Error Logger" doc:id="0f18c19e-8bb0-4785-ae41-536cccbd2823" message="#[error.description]"/>
+				<ee:transform doc:name="Transform Message" doc:id="eeb099aa-3af3-472f-a2c1-97d3c4fe553f" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{message: "We Are facing some issue at the moment."}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</on-error-propagate>
+		</error-handler>
 	</flow>
 	<flow name="cancelBooking" doc:id="877c1bf8-8ceb-4a07-8a62-0238fd5ff612" >
 		<set-variable value="#[attributes.uriParams.pnrNumber]" doc:name="Set Variable bookingid" doc:id="11f6a1f5-712e-44da-b1fe-691f91efff31" variableName="bookingid"/>
-		<logger level="INFO" doc:name="Logger" doc:id="7c9d951a-dfce-4784-be8c-bee75c8b49a1" />
+		<logger level="INFO" doc:name="Start" doc:id="7c9d951a-dfce-4784-be8c-bee75c8b49a1" message="Cancel Booking Started"/>
 		<db:update doc:name="Update" doc:id="74961532-b065-4a32-a4ae-78e5299b0bb7" config-ref="Database_Config">
 			<db:sql ><![CDATA[UPDATE flightdb.bookings 
 SET status='Canceled'
@@ -133,10 +145,24 @@ output application/json
 			</ee:message>
 		</ee:transform>
 		<set-payload value="#[output application/json&#10;---&#10;if(isEmpty(payload.status))&#10;'Booking ID does not exist'&#10;else&#10;payload]" doc:name="Set Payload" doc:id="70bfe8af-6d85-4122-861d-2a4b77efd95b" />
-		<logger level="INFO" doc:name="Logger" doc:id="54f7ef38-9b76-45ec-8fc6-322aadb239a8" />
+		<logger level="INFO" doc:name="Payload Log" doc:id="54f7ef38-9b76-45ec-8fc6-322aadb239a8" message="#[payload]"/>
+		<logger level="INFO" doc:name="END" doc:id="ee254fda-316f-4533-8c39-64dbc6d72022" message="Cancel Booking Flow completed"/>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="52fb0390-9d14-44fe-aeb1-a0c5dc099cc3" type="ANY" >
+				<logger level="ERROR" doc:name="Error Logger" doc:id="90da56e1-baeb-44ea-a210-820ab510421b" message="#[error.description]" />
+				<ee:transform doc:name="Transform Message" doc:id="f8158ef1-d45b-4ca8-8816-e59c7fb06e1f" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{message: "We Are facing some issue at the moment."}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</on-error-propagate>
+		</error-handler>
 	</flow>
 	<flow name="getFlights" doc:id="b2a6afba-6e43-4909-a918-9c40a809f0d5" >
-		<db:select doc:name="Select" doc:id="c00dedaf-f65f-4bfc-a2ee-2950a89fcb37" config-ref="Database_Config" >
+		<db:select doc:name="Flights" doc:id="c00dedaf-f65f-4bfc-a2ee-2950a89fcb37" config-ref="Database_Config" >
 			<db:sql ><![CDATA[SELECT * FROM flightdb.flights
 WHERE (origin = :origin OR :origin IS NULL)
   AND (destination = :destination OR :destination IS NULL)
@@ -162,9 +188,22 @@ payload map ( payload01 , indexOfPayload01 ) -> {
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="f2ea37b7-c21d-4741-9a61-495a4e85a478" type="ANY" >
+				<logger level="ERROR" doc:name="Error Logger" doc:id="bf337ce6-2ad3-4ebd-a09a-5f7ddbbaddd1" message="#[error.description]" />
+				<ee:transform doc:name="Transform Message" doc:id="eba8da98-90f0-4d82-b077-f84ed842e858" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{message: "We Are facing some issue at the moment."}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</on-error-propagate>
+		</error-handler>
 	</flow>
 	<flow name="GetBookingImplementation" doc:id="60f6e90d-64ef-415c-9040-ab1b0501844c" >
-		<db:select doc:name="Select" doc:id="ce8724c3-58fc-4636-b3a6-74828394de38" config-ref="Database_Config">
+		<db:select doc:name="Flight Bookings" doc:id="ce8724c3-58fc-4636-b3a6-74828394de38" config-ref="Database_Config">
 			<db:sql ><![CDATA[select * from flightdb.bookings]]></db:sql>
 		</db:select>
 		<ee:transform doc:name="Transform Message" doc:id="2e1c01b1-a84c-4fd4-8268-f91bde6c6ab9" >
@@ -180,5 +219,18 @@ payload map ( payload01 , indexOfPayload01 ) -> {
 			</ee:message>
 		</ee:transform>
 		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="e5839ba8-e091-490e-bd90-dccdd45e925f" />
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="57b9a806-97ae-46cf-90a0-eb6ef50aff7a" type="ANY" >
+				<logger level="ERROR" doc:name="Error Logger" doc:id="be9300ed-8768-45c7-a87f-ccc9f538bced" message="#[error.description]" />
+				<ee:transform doc:name="Transform Message" doc:id="b9777043-23c8-44b7-844f-14b2c46bb135" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{message: "We Are facing some issue at the moment."}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</on-error-propagate>
+		</error-handler>
 	</flow>
 </mule>
