@@ -128,8 +128,9 @@ output application/json
         </error-handler>
     </flow>
     <flow name="delete:\flights\(pnrNumber):BookMyHolidayFlightsApi-config">
-        <flow-ref doc:name="Flow Reference" doc:id="eb77ae5b-31df-4880-b49f-19dd8e703bfe" name="cancelBooking" />
-        <logger level="INFO" message="delete:\flights\(pnrNumber):BookMyHolidayFlightsApi-config" />
+        <logger level="INFO" doc:name="START" doc:id="2c2626dd-9656-4db9-8d47-b79931086ca8" message="cancelbooking flow started"/>
+		<flow-ref doc:name="Flow Reference" doc:id="eb77ae5b-31df-4880-b49f-19dd8e703bfe" name="cancelBooking" />
+        <logger level="INFO" message="cancelbooking flow completed." doc:name="END"/>
 		<error-handler >
 			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="965e4d4c-70a0-4145-8ae9-5c9ef1b863da" >
 				<set-payload value="#[message.payload]" doc:name="Set Payload" doc:id="3f41f9a8-c2a9-4e96-9652-9dcf3e0c5bfb" />
@@ -138,7 +139,9 @@ output application/json
 		</error-handler>
     </flow>
     <flow name="get:\flights:BookMyHolidayFlightsApi-config">
-        <flow-ref doc:name="Flow Reference" doc:id="df387302-3223-42c4-8c90-a7c93b6db152" name="getFlights" />
+        <logger level="INFO" doc:name="START" doc:id="c91ab4ff-d301-4276-9993-bbf67d40b79f" message="getflights flow started"/>
+		<flow-ref doc:name="Flow Reference" doc:id="df387302-3223-42c4-8c90-a7c93b6db152" name="getFlights" />
+		<logger level="INFO" doc:name="END" doc:id="3c899587-32de-452b-9890-8960d8ee1562" message="getflights flow completed."/>
 		<error-handler >
 			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="15e6cfd3-e9c7-4c95-a57d-01bc22a6042b" >
 				<set-payload value="#[payload]" doc:name="Set Payload" doc:id="2e015ffa-4f2a-4978-8d31-0ba5d423142b" />
@@ -147,7 +150,9 @@ output application/json
 		</error-handler>
     </flow>
     <flow name="post:\flights:application\json:BookMyHolidayFlightsApi-config">
-        <flow-ref doc:name="BookFlightFlowReference" doc:id="2cffe514-c168-41fe-96df-981b119b1f72" name="PostBookFlight" />
+        <logger level="INFO" doc:name="START" doc:id="e6727a01-c064-4af9-a85a-4008b39fb8ee" message="bookflights flow started"/>
+		<flow-ref doc:name="BookFlightFlowReference" doc:id="2cffe514-c168-41fe-96df-981b119b1f72" name="PostBookFlight" />
+		<logger level="INFO" doc:name="END" doc:id="c476af0e-655d-40ed-9a0f-e3fac1b62cac" message="bookflights flow completed"/>
 		<error-handler >
 			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="b16450f2-7de1-40df-b60a-b221b5d8fd98" >
 				<set-payload value="#[payload]" doc:name="Set Payload" doc:id="7f1ed4a2-69a5-4765-9efa-903e1291abaf" />
@@ -156,7 +161,9 @@ output application/json
 		</error-handler>
     </flow>
     <flow name="get:\bookings:BookMyHolidayFlightsApi-config">
+		<logger level="INFO" doc:name="START" doc:id="2a3ca717-8644-470b-a6fe-7c236baee6f0" message="getflights flow started"/>
 		<flow-ref doc:name="Flow Reference" doc:id="397fab91-431e-458c-bb09-a94b32365922" name="GetBookingImplementation"/>
+		<logger level="INFO" doc:name="END" doc:id="d9ca319c-d216-408b-b642-934058709809" message="getflights flow completed."/>
 		<error-handler >
 			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="83962487-fcc5-44f2-ac94-bf7abe434f5e" >
 				<set-payload value="#[payload]" doc:name="Set Payload" doc:id="b1888221-5b61-4d59-b8b0-3f48ef54558a" />
